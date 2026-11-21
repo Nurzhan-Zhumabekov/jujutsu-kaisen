@@ -5,6 +5,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local CollectionService = game:GetService("CollectionService")
 local TweenService = game:GetService("TweenService")
 local Debris = game:GetService("Debris")
 
@@ -124,6 +125,10 @@ function handlers.Blast(player: Player, character: Model, root: BasePart, aim: V
 	ball.CanQuery = false
 	ball.CanTouch = false
 	ball.Position = root.Position + aim * 3 + Vector3.new(0, 1, 0)
+	-- the real projectile stays on the server for hit detection; clients draw the sprite
+	-- (Effects.client.luau) on every part tagged "BlastOrb"
+	ball.Transparency = 1
+	CollectionService:AddTag(ball, "BlastOrb")
 	ball.Parent = workspace
 
 	local params = RaycastParams.new()
@@ -143,7 +148,7 @@ function handlers.Blast(player: Player, character: Model, root: BasePart, aim: V
 				damage(player, humanoid, cfg.Damage)
 				knockback(humanoid, aim, cfg.Knockback)
 			end
-			burst(result.Position, ball.Color, 9)
+			effect:FireAllClients("BlastHit", result.Position)
 			ball:Destroy()
 			return
 		end

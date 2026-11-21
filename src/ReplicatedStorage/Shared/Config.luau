@@ -16,4 +16,11 @@ Config.Abilities = {
 	Shockwave = { Cooldown = 10, Cost = 50, Damage = 35, Radius = 20, Knockback = 90 },
 }
 
+-- Sprite-sheet effects (made with pixelfx, MIT, see assets/fx/blast). Each sheet is a 8x8 grid
+-- of 128x128 frames. Size is the billboard size in studs.
+Config.Effects = {
+	BlastOrb = { Image = "rbxassetid://83381780059424", Grid = 8, Cell = 128, Frames = 64, Fps = 30, Loop = true, Size = 8 },
+	BlastHit = { Image = "rbxassetid://79013741942279", Grid = 8, Cell = 128, Frames = 52, Fps = 30, Loop = false, Size = 22 },
+}
+
 return Config

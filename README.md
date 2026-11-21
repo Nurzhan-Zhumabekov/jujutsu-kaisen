@@ -26,6 +26,8 @@ src/ReplicatedStorage/Shared/Config.luau      # баланс: урон, отка
 src/ServerScriptService/BuildArena.server.luau # строит арену (пол, стены, колонны, 10 спавнов)
 src/ServerScriptService/Combat.server.luau    # бой на сервере: приёмы, урон, кредит за убийство
 src/StarterPlayer/StarterPlayerScripts/Input.client.luau  # клавиши, интерфейс, рывок и отбрасывание
+src/StarterPlayer/StarterPlayerScripts/Effects.client.luau # пиксельные спрайты: снаряд Blast и взрыв при попадании
+assets/fx/blast/                              # исходники эффектов (pixelfx, MIT) и листы 8x8 для загрузки в Roblox
 legacy/obby/                                  # старый прототип обби, не синхронизируется
 ```
 
@@ -42,6 +44,14 @@ legacy/obby/                                  # старый прототип о
 - Делите файлы: один правит `Combat` (приёмы, урон), другой `BuildArena` и `Input` (карта, интерфейс).
 - Меняйте игру только в файлах из `src/`: то, что вы руками поставили в Studio, в git не попадёт.
 - Файлы `*.rbxl` в git не кладём (они бинарные), см. `.gitignore`.
+
+## Эффекты
+
+Снаряд Blast и его взрыв нарисованы пиксельными спрайтами из библиотеки [pixelfx](https://pixelfx.io) (лицензия MIT,
+уведомление лежит в `assets/fx/blast/`). Листы 1024x1024 (сетка 8x8, кадр 128x128) загружены в Roblox,
+их id записаны в `Config.Effects`. Чтобы заменить эффект: пересоберите лист в такую же сетку, загрузите в Roblox
+(Studio → Asset Manager или MCP `upload_image`) и поменяйте id в `Config.Effects`. Кадры листает клиент
+(`Effects.client.luau`), сервер только помечает снаряд тегом `BlastOrb` и шлёт событие `BlastHit`.
 
 ## Идеи на потом
 
